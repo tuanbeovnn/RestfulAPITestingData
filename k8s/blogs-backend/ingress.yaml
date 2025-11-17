@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: blogs-backend-ingress
+    namespace: blogs
+spec:
+    ingressClassName: nginx
+    rules:
+        - host: api-blogs-backend.notifications.vn
+          http:
+              paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: blogs-backend-service
+                            port:
+                                number: 8080

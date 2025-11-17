@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        app: blogs-backend
+    name: blogs-backend-deployment
+    namespace: blogs
+spec:
+    replicas: 2
+    revisionHistoryLimit: 11
+    selector:
+        matchLabels:
+            app: blogs-backend
+    strategy:
+        rollingUpdate:
+            maxSurge: 25%
+            maxUnavailable: 25%
+        type: RollingUpdate
+    template:
+        metadata:
+            labels:
+                app: blogs-backend
+            namespace: blogs
+        spec:
+            containers:
+                - name: blogs-backend
+                  image: registry.code4fun.id.vn/backendapptesting/my-backend-app:latest
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 8080
+                        name: tcp
+                        protocol: TCP
